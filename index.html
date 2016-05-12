@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<link rel="stylesheet" href="css/myStyle.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Introduction to Material-UI</h2>
+					<p>George Lin</p>
+				</section>
+				<section>
+					<section>
+						<p>Before Material-UI, you need to know...</p>
+						<h1 style="color:#00ffff">React</h1>
+						<p>A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES</p>
+					</section>
+					<section data-markdown>
+            <script type="text/template">
+              A simple div component:
+
+              ```
+              var HelloMessage = React.createClass({
+                render: function() {
+                  return <div>Hello {this.props.name}</div>;
+                }
+              });
+              ```
+
+              Note the *render* call in the component
+            </script>
+					</section>
+					<section data-markdown>
+            <script type="text/template">
+              A stateful component
+
+              ```
+              var Timer = React.createClass({
+                getInitialState: function() {
+                  return {secondsElapsed: 0};
+                },
+                tick: function() {
+                  this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+                },
+                componentDidMount: function() {
+                  this.interval = setInterval(this.tick, 1000);
+                },
+                componentWillUnmount: function() {
+                  clearInterval(this.interval);
+                },
+                render: function() {
+                  return (
+                    <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
+                  );
+                }
+              });
+              ```
+
+              *.setState()* can trigger component update
+            </script>
+					</section>
+          <section data-markdown>
+            <script type="text/template">
+              Super easy to make UI hierarchy
+
+              ```
+              render: function() {
+                return (
+                  <App>
+                    <FancyTitleForYourTodoList/>
+                    <TodoList>
+                      {_.map(todos, function(todo){
+                        return <TodoListItem item={todo}/>;
+                      })}
+                    </TodoList>
+                  </App>
+                );
+              }
+              ```
+            </script>
+          </section>
+				</section>
+        <section>
+          <section>
+						<p>Before Material-UI, you need to know...</p>
+						<h1>Material Design</h1>
+            <img src="https://material-design.storage.googleapis.com/publish/material_v_8/material_ext_publish/0B7WCemMG6e0VVFpiZ041SmhwY2c/what_is_material_environment.png" width="30%" height="30%"/>
+          </section>
+          <section>
+            <p>Presented by</p>
+            <img src="http://i.giphy.com/ck0mLNqC6OnU4.gif" width="50%" height="50%"/> <span style="font-size:24px">in 2014</span>
+            <p>It's an <b>UI guideline</b> about MOTION, STYLE, <span class="fragment highlight-blue" data-fragment-index="1 ">COMPONENT</span>, LAYOUT, PATTERNS...</p>
+          </section>
+          <section>
+            <p>Buttons</p>
+            <img src="https://material-design.storage.googleapis.com/publish/material_v_8/material_ext_publish/0B7WCemMG6e0VUl95QlVMNXJLU3c/components_buttons_usage1.png" width="40%" height="40%" style="display:inline-block"/>
+            <img src="https://material-design.storage.googleapis.com/publish/material_v_8/material_ext_publish/0B7WCemMG6e0VbDh6YmNiYVc3SHM/components_buttons_usage2.png" width="40%" height="40%" style="display:inline-block"/>
+          </section>
+          <section>
+            <p>Card</p>
+            <img src="https://material-design.storage.googleapis.com/publish/material_v_8/material_ext_publish/0Bzhp5Z4wHba3WFBLZjBNNGpnQzg/components_cards1.png" width="80%" height="80%">
+          </section>
+          <section>
+            <p>Date Picker</p>
+            <img src="https://material-design.storage.googleapis.com/publish/material_v_8/material_ext_publish/0B3321sZLoP_Hamc5d1k2SmhlV2c/components_pickers_date3.png" width="80%" height="80%">
+          </section>
+        </section>
+        <section>
+          <section>
+            <img src="http://www.material-ui.com/images/material-ui-logo.svg" style="border:0;padding:10px;background-color:#00ffff" width="50%" height="50%"/><span style="font-size:18px">v0.15.0</span>
+            <h2>Material-UI</h2>
+            <p>A Set of <span class="fragment highlight-blue" data-fragment-index="0">React Components</span> that Implement Google's <span class="fragment highlight-green" data-fragment-index="1">Material Design</span></p>
+          </section>
+          <!-- need to talk about react-tap-event-plugin -->
+          <section data-markdown data-transition="slide-in fade-out">
+            <script type="text/template">
+              #Usage
+              * Provide the theme
+
+              ```
+              // ./App.js
+              import React from 'react';
+              import ReactDOM from 'react-dom';
+              import getMuiTheme from 'material-ui/styles/getMuiTheme';
+              import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+              import MyAwesomeReactComponent from './MyAwesomeReactComponent';
+
+              const App = () => (
+                <MuiThemeProvider muiTheme={getMuiTheme()}>
+                  <MyAwesomeReactComponent />
+                </MuiThemeProvider>
+              );
+
+              ReactDOM.render(
+                <App />,
+                document.getElementById('app')
+              );
+              ```
+            </script>
+          </section>
+          <section data-markdown data-transition="fade-in slide-out">
+            <script type="text/template">
+              #Usage
+              * Use Material-UI's components
+
+              ```
+              // ./MyAwesomeReactComponent.js
+              import React from 'react';
+              import RaisedButton from 'material-ui/RaisedButton';
+
+              const MyAwesomeReactComponent = () => (
+                <RaisedButton label="Default" />
+              );
+
+              export default MyAwesomeReactComponent;
+              ```
+            </script>
+          </section>
+          <section data-background-image="https://material-design.storage.googleapis.com/publish/material_v_8/material_ext_publish/0Bx4BSt6jniD7Y1huOXVQdlFPMmM/materialdesign_introduction.png">
+            <h1>Customization</h1>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We use
+
+              ```
+              import getMuiTheme from 'material-ui/styles/getMuiTheme';
+              ```
+
+              , where `muiTheme` is based on [lightBaseTheme](https://github.com/callemall/material-ui/blob/master/src/styles/baseThemes/lightBaseTheme.js)
+
+              <ul style="font-size:28px">
+                <li><span style="color:cyan">spacing</span> can be used to change the spacing of components.</li>
+                <li><span style="color:greenyellow">fontFamily</span> can be used to change the default font family.</li>
+                <li><span style="color:pink">palette</span> can be used to change the color of components.</li>
+                <li><span style="color:skyblue">zIndex</span> can be used to change the level of each component.</li>
+                <li><span style="color:springgreen">isRtl</span> can be used to enable the right to left mode.</li>
+                <li>There is also one key for each component so you can use to customize them individually:</li>
+                <ul>
+                  <li>appBar</li>
+                  <li>avatar</li>
+                  <li>...</li>
+                </ul>
+              </ul>
+              [Look & Feel](http://www.material-ui.com/#/customization/themes)
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Customize it before using the theme:
+
+              ```
+              const muiTheme = getMuiTheme({
+                palette: {
+                  textColor: cyan500,
+                },
+                appBar: {
+                  height: 50,
+                },
+              });
+
+              class Main extends React.Component {
+                render() {
+                  return (
+                    <MuiThemeProvider muiTheme={muiTheme}>
+                      <AppBar title="My AppBar" />
+                    </MuiThemeProvider>
+                  );
+                }
+              }
+
+              export default Main;
+              ```
+
+              * note the <span style="color:#00BCD4">cyan500</span> in the code
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Colors for Material-UI
+
+              ```javascript
+              import {cyan500, blue700} from 'material-ui/styles/colors';
+              ```
+
+              <iframe src="http://www.material-ui.com/#/customization/colors" style="background:white" width="1200px" height="400px"/>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ##Inline Style
+              To override the theme for one component
+
+              ```
+              <Checkbox
+              id="checkboxId1"
+              name="checkboxName1"
+              value="checkboxValue1"
+              label="went for a run today"
+              style={styles.checkBox}
+              iconStyle={styles.checkBoxIcon}/>
+
+              const styles = {
+                checkBox: {
+                  width: '50px',
+                  margin: '0 auto'
+                },
+                checkBoxIcon: {
+                  fill: '#FF4081'
+                }
+              }
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ##Inline Style
+              You can also mix <span style="color:cyan">Inline</span> and <span style="color:springgreen">CSS Styles</span>
+              <span style="font-size:20px">(not recommended)</span>
+
+              ```
+              <Checkbox
+                id="checkboxId1"
+                name="checkboxName1"
+                value="checkboxValue1"
+                label="went for a run today"
+                className="muidocs-checkbox-example"
+                iconStyle={{
+                  fill: '#FF9800'
+                }}/>
+
+              /* In our CSS file */
+              .muidocs-checkbox-example {
+                border: 2px solid #0000FF;
+                background-color: #FF9800;
+              }
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ##Component
+              Let's have a <span style="color:cyan">FlatButton</span>
+              <iframe src="http://www.material-ui.com/#/components/flat-button" style="background:white" width="960px" height="480px"/>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ##Other Solutions
+              No only can [Material-UI](http://www.material-ui.com/#/) do the UI job
+
+              * [Material Design Lite](https://getmdl.io/index.html)
+
+              ```
+              <!-- Accent-colored raised button with ripple -->
+              <button class="mdl-button mdl-js-button mdl-button--raised
+               mdl-js-ripple-effect mdl-button--accent">
+                Button
+              </button>
+              ```
+
+              * [Semantic UI](http://semantic-ui.com/)
+
+              ```
+              <div class="ui three buttons">
+                <button class="ui active button">One</button>
+                <button class="ui button">Two</button>
+                <button class="ui button">Three</button>
+              </div>
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              References:
+
+              * [React](https://facebook.github.io/react/)
+              * [Material Design](https://www.google.com/design/spec/material-design/introduction.html)
+              * [Material-UI](http://www.material-ui.com/#/)
+              * [Material Design Lite](https://getmdl.io/index.html)
+              * [Semantic UI](http://semantic-ui.com/)
+            </script>
+          </section>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
